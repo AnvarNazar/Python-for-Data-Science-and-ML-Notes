@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 import numpy as np
 import pandas as pd
 
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 
 
 # Load training data
@@ -15,8 +15,8 @@ y_train = df['X..language']
 
 
 # Create linear regression model
-linearModel = LinearRegression()
-linearModel.fit(X_train, y_train)
+logRegression = LogisticRegression()
+logRegression.fit(X_train, y_train)
 
 
 # Load data for testing
@@ -26,15 +26,15 @@ X_test.rename(columns={'X..X1': 'X1'}, inplace=True)
 
 
 # Run the model
-trainingPredictions = linearModel.predict(X_train)
-predictions = linearModel.predict(X_test)
+trainingPredictions = logRegression.predict(X_train)
+predictions = logRegression.predict(X_test)
 
 # Save output to question1.csv
 np.savetxt('question1.csv', predictions, fmt='%.18e', delimiter=' ',
            newline='\n', header='', footer='', comments='#', encoding=None)
 
 # Calculate accuracy
-accuracyOnTrainingData = accuracy_score(y_train, trainingPredictions.round())
-accuracy = accuracy_score(y_test['X..language'], predictions.round())
+accuracyOnTrainingData = accuracy_score(y_train, trainingPredictions)
+accuracy = accuracy_score(y_test['X..language'], predictions)
 print('Accuracy on Training data: ', accuracyOnTrainingData)
 print('Accuracy on Test data: ', accuracy)
