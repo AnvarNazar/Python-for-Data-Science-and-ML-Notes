@@ -26,13 +26,15 @@ X_test.rename(columns={'X..X1': 'X1'}, inplace=True)
 
 
 # Run the model
+trainingPredictions = linearModel.predict(X_train)
 predictions = linearModel.predict(X_test)
-
 
 # Save output to question1.csv
 np.savetxt('question1.csv', predictions, fmt='%.18e', delimiter=' ',
            newline='\n', header='', footer='', comments='#', encoding=None)
 
 # Calculate accuracy
-accuracy_score(y_test['X..language'], predictions.round())
-
+accuracyOnTrainingData = accuracy_score(y_train, trainingPredictions.round())
+accuracy = accuracy_score(y_test['X..language'], predictions.round())
+print('Accuracy on Training data: ', accuracyOnTrainingData)
+print('Accuracy on Test data: ', accuracy)
